@@ -18,7 +18,6 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
 
     @IBAction func getRates(_ sender: Any) {
@@ -33,9 +32,30 @@ class ViewController: UIViewController {
             }else{
                 if data != nil{
                     do{
-                        let jsonResponse = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers)
+                        let jsonResponse = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as! Dictionary<String, Any>
                         DispatchQueue.main.async {
-                            print(jsonResponse)
+                            
+                            if let rates = jsonResponse["rates"] as? [String : Any]{
+                                
+                                if let cad = rates["CAD"] as? Double {
+                                    self.lblCad.text = "CAD: \(cad)"
+                                }
+                                if let chf = rates["CHF"] as? Double {
+                                    self.lblChf.text = "CHF: \(chf)"
+                                }
+                                if let gbp = rates["GBP"] as? Double {
+                                    self.lblGbp.text = "GBP: \(gbp)"
+                                }
+                                if let jpy = rates["JPY"] as? Double {
+                                    self.lblJpy.text = "JPY: \(jpy)"
+                                }
+                                if let usd = rates["USD"] as? Double {
+                                    self.lblUsd.text = "USD: \(usd)"
+                                }
+                                if let tl = rates["TRY"] as? Double {
+                                    self.lblTry.text = "TRY: \(tl)"
+                                }
+                            }
                         }
                     } catch {
                         print("error!")
@@ -43,7 +63,6 @@ class ViewController: UIViewController {
                 }
             }
         }
-        
         task.resume()
 
     }
