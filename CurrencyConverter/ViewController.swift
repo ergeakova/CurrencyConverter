@@ -22,7 +22,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func getRates(_ sender: Any) {
-        let url = URL(string: "https://api.apilayer.com/fixer/latest?apikey=<YOUR API KEY>")
+        let url = URL(string: "http://api.apilayer.com/fixer/latest?apikey=<YOUR API KEY>")
         let session = URLSession.shared
         let task = session.dataTask(with: url!) { (data, response, error) in
             if error != nil{
@@ -32,10 +32,19 @@ class ViewController: UIViewController {
                 self.present(alert, animated: true, completion: nil)
             }else{
                 if data != nil{
-                    
+                    do{
+                        let jsonResponse = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers)
+                        DispatchQueue.main.async {
+                            print(jsonResponse)
+                        }
+                    } catch {
+                        print("error!")
+                    }
                 }
             }
         }
+        
+        task.resume()
 
     }
     
