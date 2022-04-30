@@ -22,7 +22,21 @@ class ViewController: UIViewController {
     }
 
     @IBAction func getRates(_ sender: Any) {
-        print("get rates")
+        let url = URL(string: "https://api.apilayer.com/fixer/latest?apikey=<YOUR API KEY>")
+        let session = URLSession.shared
+        let task = session.dataTask(with: url!) { (data, response, error) in
+            if error != nil{
+                let alert = UIAlertController(title: "Error!", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                let okButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }else{
+                if data != nil{
+                    
+                }
+            }
+        }
+
     }
     
 }
